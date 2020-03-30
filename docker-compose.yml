@@ -1,0 +1,10 @@
+version: '2'
+services:
+  edge:
+    restart: always
+    build: ./edge
+    privileged: true
+    volumes:
+      - resin-data:/data
+volumes:
+  resin-data:
