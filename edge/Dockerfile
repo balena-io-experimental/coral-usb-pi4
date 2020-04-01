@@ -1,9 +1,10 @@
-FROM balenalib/raspberrypi4-64-ubuntu-python
+FROM balenalib/raspberrypi4-64
 
 # Install some utilities we will need
 RUN echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-RUN apt-get update && apt-get -y install wget python3-pip libedgetpu1-std zlib1g-dev libjpeg8-dev vim git
+#RUN apt-get update && apt-get -y install python3 wget python3-pip libedgetpu1-std zlib1g-dev libjpeg8-dev vim git python3-numpy
+RUN apt-get update && apt-get -y install python3 wget python3-pip libedgetpu1-std zlib1g-dev vim git python3-numpy python3-opencv
 
 # Set our working directory
 WORKDIR /usr/src/app
@@ -17,7 +18,7 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt requirements.txt
 
-#RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 COPY models/ models/
 
@@ -28,6 +29,8 @@ COPY run.sh run.sh
 
 # Flip the camera vertically
 ENV VFLIP=True
+
+RUN git clone https://github.com/tensorflow/examples.git
 
 CMD ["bash","run.sh"]
 CMD ["bash"]
