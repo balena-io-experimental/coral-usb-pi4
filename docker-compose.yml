@@ -6,5 +6,11 @@ services:
     privileged: true
     volumes:
       - resin-data:/data
+  rosetta:
+    restart: always
+    build: ./rosetta
+    privileged: true
+    volumes:
+      - resin-data:/data
 volumes:
   resin-data:
